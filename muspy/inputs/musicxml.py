@@ -20,9 +20,10 @@ from ..classes import (
     Tempo,
     TimeSignature,
     Track,
+    ChordSymbol
 )
 from ..music import DEFAULT_RESOLUTION, Music
-from ..utils import CIRCLE_OF_FIFTHS, MODE_CENTERS, NOTE_MAP, NOTE_TYPE_MAP
+from ..utils import CIRCLE_OF_FIFTHS, MODE_CENTERS, NOTE_MAP, NOTE_TYPE_MAP, ChordSymbolParser
 
 T = TypeVar("T")
 
@@ -648,6 +649,7 @@ def parse_part_elem(
         instrument_id: [] for instrument_id in instrument_info
     }
     lyrics: List[Lyric] = []
+    chord_symbols: List[ChordSymbol] = []
 
     # Initialize variables
     time = 0
@@ -711,6 +713,14 @@ def parse_part_elem(
                     dynamics = sound_elem_.get("dynamics")
                     if dynamics is not None:
                         velocity = round(float(dynamics))
+
+            # Harmony - chord symbols
+            elif elem.tag == 'harmony':
+                chord_symbol_parsed = ChordSymbolParser(elem, time)
+                print(chord_symbol_parsed)
+                chord_symbol = ChordSymbol(chord_symbol_parsed)
+                print(chord_symbol)
+                chord_symbols.append( chord_symbol )
 
             # Note elements
             elif elem.tag == "note":

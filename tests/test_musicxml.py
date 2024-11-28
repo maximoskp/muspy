@@ -684,3 +684,14 @@ def test_write_compressed():
     check_time_signatures(loaded.time_signatures)
     check_tracks(loaded.tracks, 10080)
     # TODO: Check lyrics and annotations
+
+def test_chord_symbols():
+    music = muspy.load(TEST_JSON_PATH)
+
+    # temp_dir = Path(tempfile.mkdtemp())
+    # music.write(temp_dir / "A_Beautiful_Friendship.mxl")
+
+    # loaded = muspy.read(temp_dir / "A_Beautiful_Friendship.mxl")
+    loaded = muspy.read('/media/datadisk/repos/muspy/tests/data/musicxml-lilypond/71a_f-Guitar_notation.xml')
+    # print(loaded)
+    return loaded
