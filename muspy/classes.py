@@ -676,21 +676,23 @@ class ChordSymbol(Base):
     time : int
         Start time of the chord symbol, in time steps.
     root : str
-        Root note symbol in string format as returned by ChordSymbolParser.
+        Root note symbol in string format as returned by utils:ChordSymbolParser.
     kind : str
-        Root kind symbol in string format as returned by ChordSymbolParser.
+        Root kind symbol in string format as returned by utils:ChordSymbolParser.
     degrees : List[str]
-        Root degrees as list of symbols in string format as returned by ChordSymbolParser.
+        Root degrees as list of symbols in string format as returned by utils:ChordSymbolParser.
     bass : str
-        Bass note symbol in string format as returned by ChordSymbolParser.
+        Bass note symbol in string format as returned by utils:ChordSymbolParser.
+    binary_xml : np.array
+        Binary 12D representation of chord quality pitch classes, as produced by utils:ChordSymbolParses.
     chord_symbol_xml : str
         Chord symbol in string format as constructed from XML information.
     chord_symbol_mir_eval : str
         Chord symbol that can be parsed by mir_eval.chord.encode.
+    chord_symbol_mir_eval : np.array
+        Binary 12D representation of chord quality pitch classes that best matches chord qualities in mir_eval.chord.
     root_pc : int
         Pitch class of the root note.
-    pitch_classes : list of int
-        Pitch classes of the notes in the chord. Valid values are 0 to 11.
     """
 
     _attributes = OrderedDict(
@@ -741,28 +743,6 @@ class ChordSymbol(Base):
         self.binary_mir_eval = EXT_MIR_QUALITIES[key_max]
         self.root_pc, _, _ = mir_eval.chord.encode( self.chord_symbol_mir_eval )
 
-    # def construct_mir_eval_symbol(self):
-    #     self.chord_symbol_mir_eval = self.root + (len(self.kind) > 0)*":" + self.chord_symbol_mir_eval_translator()
-
-    # def construct_pitch_classes_from_mir_eval_symbol(self):
-    #     root_pc , type_binary = None , None
-    #     try:
-    #         root_pc, type_binary, _ = mir_eval.chord.encode( self.chord_symbol_mir_eval )
-    #     except:
-    #         Warning('Cannot understand symbol with mir_eval: ' + self.chord_symbol_mir_eval)
-    #     self.root_pc = root_pc
-    #     if type_binary is not None:
-    #         self.pitch_classes = np.nonzero(type_binary)[0]
-    #     else:
-    #         self.pitch_classes = None
-
-    # def chord_symbol_mir_eval_translator(self):
-    #     binary_from_xml = self.binary_to_xml()
-    #     return binary_from_xml
-
-    # def binary_to_xml(self):
-    #     return self.chord_symbol_xml
-
     @property
     def start(self):
         """Start time of the chord symbol."""
@@ -772,33 +752,6 @@ class ChordSymbol(Base):
     def start(self, start):
         """Setter for start time."""
         self.time = start
-
-    # @property
-    # def end(self):
-    #     """End time of the chord symbol."""
-    #     return self.time + self.duration
-
-    # @end.setter
-    # def end(self, end):
-    #     """Setter for end time."""
-    #     self.duration = end - self.time
-
-    # def _validate(self, attr: str, recursive: bool):
-    #     super()._validate(attr, recursive)
-    #     if attr == "root":
-    #         if self.root not in note_symbols_dict.keys():
-    #             raise ValueError(
-    #                 'root symbol not understood: ' + self.root
-    #             )
-    #     if attr == "chord_type" and self.duration < 0:
-    #         raise Warning("`duration` must be nonnegative.")
-    #     if attr == "velocity" and (self.velocity < 0 or self.velocity > 127):
-    #         raise ValueError("`velocity` must be in between 0 to 127.")
-
-    # def _adjust_time(
-    #     self, func: Callable[[int], int], attr: str, recursive: bool
-    # ):
-    #     raise NotImplementedError
 
     def adjust_time(
         self: ChordSymbolT,
@@ -848,28 +801,6 @@ class ChordSymbol(Base):
         self.pitch_classes += [(pitch + semitone)%12 for pitch in self.pitch_classes]
         self.root = note_symbols_dict[self.root_pc]
         return self
-
-    # def clip(self: ChordT, lower: int = 0, upper: int = 127) -> ChordT:
-    #     """Clip the velocity of the chord.
-
-    #     Parameters
-    #     ----------
-    #     lower : int, default: 0
-    #         Lower bound.
-    #     upper : int, default: 127
-    #         Upper bound.
-
-    #     Returns
-    #     -------
-    #     Object itself.
-
-    #     """
-    #     assert upper >= lower, "`upper` must be greater than `lower`."
-    #     if self.velocity > upper:
-    #         self.velocity = upper
-    #     elif self.velocity < lower:
-    #         self.velocity = lower
-    #     return self
 
 class Track(ComplexBase):
     """A container for music track.

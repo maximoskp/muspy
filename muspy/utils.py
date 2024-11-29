@@ -189,6 +189,8 @@ class ChordSymbolParser(object):
             "no3" to remove the third scale degree, etc.
     4) Bass: a string representing the chord bass pitch class, or None if the bass
             pitch class is the same as the root pitch class.
+    5) Binary_xml: 12D binary representation of chord pitch classes. This is used
+            to find the proper matching quality in mir_eval.chord.
     There's also a special chord kind "N.C." representing no harmony, for which
     all other fields should be None.
     Use the `get_figure_string` method to get a string representation of the chord
