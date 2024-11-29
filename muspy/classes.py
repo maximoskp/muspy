@@ -72,9 +72,7 @@ note_symbols_dict = {
 }
 
 MIR_QUALITIES = mir_eval.chord.QUALITIES
-print('MIR_QUALITIES: ', MIR_QUALITIES)
 EXTENDED_QUALITY_REDUX = mir_eval.chord.EXTENDED_QUALITY_REDUX
-print('EXTENDED_QUALITY_REDUX: ', EXTENDED_QUALITY_REDUX)
 EXT_MIR_QUALITIES = deepcopy( MIR_QUALITIES )
 for k in EXT_MIR_QUALITIES.keys():
     _, quality, scale_degrees, _ = mir_eval.chord.split( 'C' + (len(k) > 0)*':' + k, reduce_extended_chords=True )
