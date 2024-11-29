@@ -1048,11 +1048,11 @@ def read_musicxml(
             )
         part_elem = _get_required(root, "part")
         instrument_info = {"": {"program": 0, "is_drum": False}}
-        notes, lyrics = parse_part_elem(
+        notes, lyrics, chord_symbols = parse_part_elem(
             part_elem, resolution, instrument_info, measure_indices
         )
         tracks.append(
-            Track(program=0, is_drum=False, notes=notes[""], lyrics=lyrics)
+            Track(program=0, is_drum=False, notes=notes[""], lyrics=lyrics, harmony=chord_symbols)
         )
 
     else:
@@ -1067,7 +1067,7 @@ def read_musicxml(
                 continue
 
             # Parse part
-            notes, lyrics = parse_part_elem(
+            notes, lyrics, chord_symbols = parse_part_elem(
                 part_elem, resolution, part_info[part_id], measure_indices
             )
 
@@ -1079,6 +1079,7 @@ def read_musicxml(
                     name=part_info[part_id][instrument_id]["name"],
                     notes=instrument_notes,
                     lyrics=lyrics,
+                    harmony=chord_symbols
                 )
                 tracks.append(track)
 

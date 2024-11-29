@@ -915,7 +915,7 @@ class Track(ComplexBase):
             ("notes", Note),
             ("chords", Chord),
             ("lyrics", Lyric),
-            ("harmony", ChordSymbol)
+            ("harmony", ChordSymbol),
             ("annotations", Annotation),
         ]
     )
