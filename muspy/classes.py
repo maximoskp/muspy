@@ -891,6 +891,8 @@ class Track(ComplexBase):
         Annotations.
     lyrics : list of :class:`muspy.Lyric`, default: []
         Lyrics.
+    harmony: list of :class:`muspy.ChordSymbol`, default: []
+        Harmony.
 
     Note
     ----
@@ -913,11 +915,12 @@ class Track(ComplexBase):
             ("notes", Note),
             ("chords", Chord),
             ("lyrics", Lyric),
+            ("harmony", ChordSymbol)
             ("annotations", Annotation),
         ]
     )
-    _optional_attributes = ["name", "notes", "chords", "lyrics", "annotations"]
-    _list_attributes = ["notes", "chords", "lyrics", "annotations"]
+    _optional_attributes = ["name", "notes", "chords", "lyrics", "harmony", "annotations"]
+    _list_attributes = ["notes", "chords", "lyrics", "harmony", "annotations"]
 
     def __init__(
         self,
@@ -927,6 +930,7 @@ class Track(ComplexBase):
         notes: List[Note] = None,
         chords: List[Chord] = None,
         lyrics: List[Lyric] = None,
+        harmony: List[ChordSymbol] = None,
         annotations: List[Annotation] = None,
     ):
         self.program = program if program is not None else 0
@@ -935,6 +939,7 @@ class Track(ComplexBase):
         self.notes = notes if notes is not None else []
         self.chords = chords if chords is not None else []
         self.lyrics = lyrics if lyrics is not None else []
+        self.harmony = harmony if harmony is not None else []
         self.annotations = annotations if annotations is not None else []
 
     def __len__(self) -> int:
@@ -1008,6 +1013,8 @@ class Track(ComplexBase):
         """
         for note in self.notes:
             note.transpose(semitone)
+        for chordsymbol in self.harmony:
+            chordsymbol.transpose(semitone)
         return self
 
     def trim(self: TrackT, end: int) -> TrackT:

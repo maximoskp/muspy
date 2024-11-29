@@ -855,7 +855,7 @@ def parse_part_elem(
     # Sort lyrics
     lyrics.sort(key=attrgetter("time"))
 
-    return notes, lyrics
+    return notes, lyrics, chord_symbols
 
 
 def parse_metadata(root: Element) -> Metadata:
