@@ -855,6 +855,9 @@ def parse_part_elem(
     # Sort lyrics
     lyrics.sort(key=attrgetter("time"))
 
+    # Sort chord_symbols
+    chord_symbols.sort(key=attrgetter("time"))
+
     return notes, lyrics, chord_symbols
 
 
