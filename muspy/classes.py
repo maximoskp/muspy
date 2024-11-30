@@ -729,7 +729,7 @@ class ChordSymbol(Base):
         for d in self.degrees:
             self.chord_symbol_xml += d
         if self.bass:
-            self.chord_symbol_xml += self.bass
+            self.chord_symbol_xml += '/' + self.bass
 
     def get_closest_mir_eval_symbol(self):
         similarity_max = -1

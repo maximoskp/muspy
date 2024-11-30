@@ -716,7 +716,7 @@ def parse_part_elem(
 
             # Harmony - chord symbols
             elif elem.tag == 'harmony':
-                chord_symbol_parsed = ChordSymbolParser(elem, time)
+                chord_symbol_parsed = ChordSymbolParser(elem, time+position)
                 chord_symbol = ChordSymbol(chord_symbol_parsed)
                 chord_symbols.append( chord_symbol )
 

@@ -686,6 +686,7 @@ def test_write_compressed():
     # TODO: Check lyrics and annotations
 
 def test_chord_symbols():
-    loaded = muspy.read('/media/datadisk/repos/muspy/tests/data/musicxml-lilypond/71a_f-Guitar_notation.xml')
+    loaded = muspy.read('tests/data/musicxml-lilypond/71a_f-Guitar_notation.xml')
+    # loaded = muspy.read('tests/data/musicxml-lilypond/bass_test.mxl')
     print(loaded)
     return loaded
