@@ -72,14 +72,14 @@ note_symbols_dict = {
 }
 
 MIR_QUALITIES = mir_eval.chord.QUALITIES
-EXTENDED_QUALITY_REDUX = mir_eval.chord.EXTENDED_QUALITY_REDUX
 EXT_MIR_QUALITIES = deepcopy( MIR_QUALITIES )
-for k in EXT_MIR_QUALITIES.keys():
-    _, quality, scale_degrees, _ = mir_eval.chord.split( 'C' + (len(k) > 0)*':' + k, reduce_extended_chords=True )
-    semitone_bitmap = mir_eval.chord.quality_to_bitmap(quality)
-    semitone_bitmap[0] = 1
-    for scale_degree in scale_degrees:
-        semitone_bitmap += mir_eval.chord.scale_degree_to_bitmap(scale_degree, True)
+for k in list(EXT_MIR_QUALITIES.keys()) + ['7(b9)', '7(#9)', '7(#11)', '7(b13)']:
+    _, semitone_bitmap, _ = mir_eval.chord.encode( 'C' + (len(k) > 0)*':' + k, reduce_extended_chords=True )
+    # _, quality, scale_degrees, _ = mir_eval.chord.split( 'C' + (len(k) > 0)*':' + k, reduce_extended_chords=True )
+    # semitone_bitmap = mir_eval.chord.quality_to_bitmap(quality)
+    # semitone_bitmap[0] = 1
+    # for scale_degree in scale_degrees:
+    #     semitone_bitmap += mir_eval.chord.scale_degree_to_bitmap(scale_degree, True)
     EXT_MIR_QUALITIES[k] = semitone_bitmap
 
 def get_end_time(list_: List, is_sorted: bool = False, attr: str = "time"):
