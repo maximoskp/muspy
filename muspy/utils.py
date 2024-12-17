@@ -237,6 +237,7 @@ class ChordSymbolParser(object):
             'minor-13th': 'm13',
             'suspended-second': 'sus2',
             'suspended-fourth': 'sus',
+            'suspended-fourth-seventh': 'sus',
             'pedal': 'ped',
             'power': '5',
             'none': 'N.C.',
